@@ -53,7 +53,7 @@ mysqlConnection.connect(err => {
                         if(!rows.map(e=> e.table_name).includes('order')){
                         console.log('database doesn\'t have order table \n creating order table....')
                         
-                        mysqlConnection.query(`create table order (order_id serial primary key, status ENUM('Cancelled','Delivered','Shipped','Proccessing','Placed'))`, err => console.log(err))
+                        mysqlConnection.query(`create table order (order_id serial primary key, status ENUM('Cancelled','Delivered','Shipped','Proccessing','Placed') default 'Processing')`, err => console.log(err))
                         }
                     }
                     else{
