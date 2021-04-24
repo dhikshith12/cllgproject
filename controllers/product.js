@@ -5,7 +5,7 @@ const fs = require("fs");
 const { assert } = require("console");
 const { parse } = require("path");
 const { bulkWrite } = require("../models/product");
-
+const mysqlConnection = require("../dbconnection")
 
 exports.getProductById = (req, res, next, id) => {
   Product.findById(id)
@@ -132,22 +132,10 @@ exports.updateProduct = (req,res)=>{
 }
 
 exports.getAllProducts = (req,res)=>{
-  let limit = req.query.limit? parseInt(req.query.limit): 8;
-  let sortBy = req.query.sortBy? req.query.sortBy: "_id";
-
-  Product.find()
-    .select("-photo")
-    .populate("category")
-    .sort([[sortBy, "asc"]])
-    .limit(limit)
-    .exec((err,products)=>{
-      if(err){
-        return res.status(400).json({
-          message: "NO products found"
-        })
-      }
-      res.json(products)
-    })
+  mysqlConnection.query('select * from products',(err,rows)=>{
+    console.log('getting products....')
+    console.log(rows)
+  })
 }
 
 exports.updateStock = (req,res, next)=>{
