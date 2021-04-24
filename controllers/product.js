@@ -132,9 +132,13 @@ exports.updateProduct = (req,res)=>{
 }
 
 exports.getAllProducts = (req,res)=>{
+  let limit = req.query.limit? parseInt(req.query.limit): 8;
+  let sortBy = req.query.sortBy? req.query.sortBy: "_id";
+
   mysqlConnection.query('select * from products',(err,rows)=>{
     console.log('getting products....')
     console.log(rows)
+    res.send('got products..')
   })
 }
 
